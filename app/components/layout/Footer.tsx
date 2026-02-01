@@ -12,7 +12,7 @@ export const Footer: React.FC = () => {
     router.push(path);
   };
 
-  const socialLinks: { name: string; href: string; title?: string; icon: JSX.Element }[] = [];
+  const socialLinks: { name: string; href: string; title?: string; icon: React.ReactNode }[] = [];
 
   const footerLinks = [
     { label: 'About', path: '/about' },
