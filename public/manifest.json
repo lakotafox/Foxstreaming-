@@ -1,6 +1,6 @@
 {
-  "short_name": "Flyx",
-  "name": "Flyx 2.0 - Stream Beyond",
+  "short_name": "FoxStream",
+  "name": "FoxStream - Stream Beyond",
   "description": "Discover and stream your favorite movies and TV shows",
   "icons": [
     {
@@ -21,7 +21,7 @@
   ],
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#6366f1",
+  "theme_color": "#f7931e",
   "background_color": "#0f0f23",
   "orientation": "any",
   "scope": "/",

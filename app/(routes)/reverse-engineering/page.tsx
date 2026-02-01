@@ -1240,7 +1240,7 @@ if (isAnimeKai || isMegaUpCdn || is1moviesCdn) {
 
               <div className={styles.ctaBox}>
                 <p>
-                  This documentation is part of the Flyx project. Check out the full{' '}
+                  This documentation is part of the FoxStream project. Check out the full{' '}
                   <Link href="/about" className={styles.ctaLink}>About page</Link> for the complete 
                   story of how we built an ethical streaming platform by reverse engineering the 
                   unethical ones.

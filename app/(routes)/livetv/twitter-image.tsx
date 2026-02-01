@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
 
-export const alt = 'Flyx Live TV - Watch Live Sports, News & Entertainment';
+export const alt = 'FoxStream Live TV - Watch Live Sports, News & Entertainment';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 

@@ -233,9 +233,9 @@ function ContentRow({ title, data, onItemClick, onSeeAll, accentColor = 'amber' 
                     <svg width="16" height="16" className="md:w-5 md:h-5" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z" /></svg>
                   </motion.div>
                 </div>
-                {(item.vote_average ?? 0) > 0 && (
+                {(parseFloat(String(item.vote_average)) || 0) > 0 && (
                   <div className="absolute top-1.5 right-1.5 md:top-2 md:right-2 px-1 md:px-1.5 py-0.5 bg-black/70 backdrop-blur-sm rounded text-[10px] md:text-xs font-semibold text-amber-400 flex items-center gap-0.5 md:gap-1">
-                    ★ {(item.vote_average ?? 0).toFixed(1)}
+                    ★ {(parseFloat(String(item.vote_average)) || 0).toFixed(1)}
                   </div>
                 )}
               </motion.div>

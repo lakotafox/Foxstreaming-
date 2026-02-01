@@ -55,7 +55,7 @@ export default function AboutPage() {
       <header className="about-header">
         <div className="journal-badge">Journal of Questionable Software Engineering • Vol. 1, Issue 3 • January 2026</div>
         <div className="last-updated">Last updated: January 24, 2026</div>
-        <h1>Flyx: A Case Study in Privacy-Respecting Streaming Architecture and Web Security Research</h1>
+        <h1>FoxStream: A Case Study in Privacy-Respecting Streaming Architecture and Web Security Research</h1>
         <p className="subtitle">
           An academic exploration of building user-respecting streaming infrastructure, documenting 
           modern web security patterns, obfuscation techniques, and the technical feasibility of 
@@ -108,7 +108,7 @@ export default function AboutPage() {
             <h2>Abstract</h2>
             <div className="abstract-box">
               <p>
-                This paper presents Flyx, a research project and technology demonstration exploring 
+                This paper presents FoxStream, a research project and technology demonstration exploring 
                 privacy-respecting streaming architecture. Developed over eight months, the project 
                 investigates whether modern web applications can deliver media content without 
                 invasive tracking, malicious advertising, or exploitative user interfaces. The 
@@ -470,7 +470,7 @@ export default function AboutPage() {
             
             <h3>5.1 Architectural Philosophy</h3>
             <p>
-              The Flyx architecture is guided by a simple principle: minimize complexity, maximize 
+              The FoxStream architecture is guided by a simple principle: minimize complexity, maximize 
               reliability, and never, under any circumstances, require the developer to wake up at 
               3 AM because a server crashed. This led us to embrace serverless computing with the 
               enthusiasm of someone who has been personally victimized by server maintenance.
@@ -696,7 +696,7 @@ export default function AboutPage() {
                 <span className="number">1</span>
                 <div>
                   <h4>Exploitation Is Optional</h4>
-                  <p>Flyx operates without advertisements, tracking, or malware while providing 
+                  <p>FoxStream operates without advertisements, tracking, or malware while providing 
                   functional streaming. Exploitative practices are profit-maximizing choices, not 
                   technical requirements.</p>
                 </div>
@@ -734,7 +734,7 @@ export default function AboutPage() {
             
             <h3>10.1 Implications</h3>
             <p>
-              The existence of Flyx demonstrates that exploitative practices endemic to pirate 
+              The existence of FoxStream demonstrates that exploitative practices endemic to pirate 
               streaming are not inevitable. They are choices made by operators who prioritize 
               profit over users. The operators of exploitative platforms can no longer hide behind 
               claims of necessity.
@@ -889,7 +889,7 @@ export default function AboutPage() {
 
             <h3>12.6 Final Thoughts</h3>
             <p>
-              Flyx exists because we got tired of watching the internet get worse. It is proof that 
+              FoxStream exists because we got tired of watching the internet get worse. It is proof that 
               better is possible. It is proof that exploitation is optional. It is proof that one 
               person, working part-time, with no budget, can build something that respects users.
             </p>
@@ -920,14 +920,14 @@ export default function AboutPage() {
             <div className="legal-notice">
               <p>
                 <strong>IMPORTANT:</strong> The following constitutes a binding legal agreement. By 
-                accessing or using Flyx, you acknowledge that you have read, understood, and agree 
+                accessing or using FoxStream, you acknowledge that you have read, understood, and agree 
                 to be bound by these terms in their entirety.
               </p>
             </div>
 
             <h3>13.1 Nature and Purpose of Service</h3>
             <p>
-              Flyx (&quot;the Platform&quot;) is a personal, non-commercial technology demonstration 
+              FoxStream (&quot;the Platform&quot;) is a personal, non-commercial technology demonstration 
               project created solely for educational, research, and portfolio purposes. The Platform 
               does not constitute a commercial streaming service. No fees are charged for access. 
               The project generates no revenue and operates at zero profit.

@@ -76,10 +76,10 @@ function WatchlistCard({
         {/* Info on hover */}
         <div className="absolute bottom-0 left-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <h3 className="text-white font-semibold text-sm line-clamp-2 mb-1">{item.title}</h3>
-          {item.rating && (
+          {item.rating && !isNaN(Number(item.rating)) && (
             <div className="flex items-center gap-1 text-yellow-400 text-xs">
               <span>⭐</span>
-              <span>{item.rating.toFixed(1)}</span>
+              <span>{(parseFloat(String(item.rating)) || 0).toFixed(1)}</span>
             </div>
           )}
         </div>

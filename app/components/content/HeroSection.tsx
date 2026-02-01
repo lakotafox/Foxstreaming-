@@ -39,8 +39,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     onMoreInfo?.(String(item.id));
   };
 
-  // Format rating
-  const rating = item.rating || item.vote_average || 0;
+  // Format rating (with NaN protection)
+  const rawRating = item.rating || item.vote_average || 0;
+  const rating = parseFloat(String(rawRating)) || 0;
   const formattedRating = rating.toFixed(1);
 
   // Get rating color
@@ -138,7 +139,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </div>
 
               {/* Release year */}
-              {item.releaseDate && (
+              {item.releaseDate && !isNaN(new Date(item.releaseDate).getTime()) && (
                 <>
                   <span className="text-gray-500">•</span>
                   <span className="text-gray-300">

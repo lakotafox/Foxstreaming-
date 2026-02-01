@@ -61,8 +61,9 @@ export const ContentCard: React.FC<ContentCardProps> = ({
     // This prevents double-scrolling issues
   };
 
-  // Format rating to 1 decimal place
-  const rating = item.rating || item.vote_average || 0;
+  // Format rating to 1 decimal place (with NaN protection)
+  const rawRating = item.rating || item.vote_average || 0;
+  const rating = parseFloat(String(rawRating)) || 0;
   const formattedRating = rating.toFixed(1);
   const ratingPercentage = (rating / 10) * 100;
 
@@ -214,9 +215,11 @@ export const ContentCard: React.FC<ContentCardProps> = ({
             </h3>
 
             <div className="flex items-center gap-2 text-xs text-gray-400">
-              {(item.releaseDate || item.release_date || item.first_air_date) && (
-                <span>{new Date(item.releaseDate || item.release_date || item.first_air_date || '').getFullYear()}</span>
-              )}
+              {(() => {
+                const dateStr = item.releaseDate || item.release_date || item.first_air_date || '';
+                const date = new Date(dateStr);
+                return dateStr && !isNaN(date.getTime()) ? <span>{date.getFullYear()}</span> : null;
+              })()}
               {item.genres && item.genres.length > 0 && (
                 <>
                   <span>•</span>

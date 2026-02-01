@@ -8,9 +8,9 @@
  * Implements standardized response format per Requirements 16.2, 16.3, 16.4, 16.5
  */
 
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { verifyAdminAuth } from '../../../lib/utils/admin-auth';
-import { getD1Database } from '../../../lib/db/d1-connection';
+import { getD1Database, isD1Available } from '../../../lib/db/d1-connection';
 import {
   successResponse,
   unauthorizedResponse,
@@ -33,43 +33,49 @@ export interface BannerConfig {
 // GET - Fetch current banner (public endpoint for display)
 export async function GET(request: NextRequest) {
   try {
+    // Check if D1 is available (not available in local dev)
+    if (!isD1Available()) {
+      // Return no banner for local development
+      return NextResponse.json({ success: true, data: { banner: null }, timestamp: Date.now() });
+    }
+
     const db = getD1Database();
-    
+
     // Check if this is an admin request (should return banner even if disabled)
     const url = new URL(request.url);
     const isAdminRequest = url.searchParams.get('admin') === 'true';
-    
+
     // Try to get banner from database
     const result = await db.prepare(
       "SELECT * FROM site_settings WHERE key = 'banner' LIMIT 1"
     ).first<{ key: string; value: string }>();
-    
+
     if (result && result.value) {
       const banner = JSON.parse(result.value) as BannerConfig;
-      
+
       // For admin requests, always return the banner for editing
       if (isAdminRequest) {
         return successResponse({ banner });
       }
-      
+
       // Check if banner has expired
       if (banner.expiresAt && new Date(banner.expiresAt) < new Date()) {
         return successResponse({ banner: null });
       }
-      
+
       // Only return if enabled
       if (!banner.enabled) {
         return successResponse({ banner: null });
       }
-      
+
       return successResponse({ banner });
     }
-    
+
     return successResponse({ banner: null });
   } catch (error) {
     console.error('[Banner API] Error fetching banner:', error);
     // Return null banner on error (don't break the site)
-    return successResponse({ banner: null });
+    return NextResponse.json({ success: true, data: { banner: null }, timestamp: Date.now() });
   }
 }
 
@@ -83,12 +89,17 @@ function generateBannerId(): string {
 // POST - Update banner (admin only)
 export async function POST(request: NextRequest) {
   try {
+    // Check if D1 is available (not available in local dev)
+    if (!isD1Available()) {
+      return NextResponse.json({ success: false, error: 'Banner management not available in local development' }, { status: 501 });
+    }
+
     // Verify admin authentication - Requirements 16.3
     const authResult = await verifyAdminAuth(request);
     if (!authResult.success) {
       return unauthorizedResponse(authResult.error || 'Authentication required');
     }
-    
+
     const db = getD1Database();
     const body = await request.json();
     const { message, type = 'info', enabled = true, dismissible = true, linkText, linkUrl, expiresAt } = body;
@@ -136,12 +147,17 @@ export async function POST(request: NextRequest) {
 // DELETE - Disable/remove banner (admin only)
 export async function DELETE(request: NextRequest) {
   try {
+    // Check if D1 is available (not available in local dev)
+    if (!isD1Available()) {
+      return NextResponse.json({ success: false, error: 'Banner management not available in local development' }, { status: 501 });
+    }
+
     // Verify admin authentication - Requirements 16.3
     const authResult = await verifyAdminAuth(request);
     if (!authResult.success) {
       return unauthorizedResponse(authResult.error || 'Authentication required');
     }
-    
+
     const db = getD1Database();
     
     // Get current banner, update enabled to false

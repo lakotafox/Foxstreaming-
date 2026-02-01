@@ -147,12 +147,12 @@ export default function BrowsePageClient({
                           </svg>
                         </div>
                       </div>
-                      {(item.vote_average ?? 0) > 0 && (
+                      {(parseFloat(String(item.vote_average)) || 0) > 0 && (
                         <div className={`absolute top-2 right-2 px-1.5 py-0.5 bg-black/70 backdrop-blur-sm rounded text-xs font-semibold ${themeColors.text} flex items-center gap-1`}>
                           <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
                           </svg>
-                          {(item.vote_average ?? 0).toFixed(1)}
+                          {(parseFloat(String(item.vote_average)) || 0).toFixed(1)}
                         </div>
                       )}
                     </motion.div>

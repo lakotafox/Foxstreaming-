@@ -4,6 +4,10 @@ flyx-secure
 dlhd-extractor-worker
 # dependencies
 /node_modules
+/electron-app/node_modules
+/electron-app/dist
+/rpi-proxy/node_modules
+/cloudflare-proxy/node_modules
 /.pnp
 .pnp.js
 .next

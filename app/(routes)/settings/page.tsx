@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import SettingsPageClient from './SettingsPageClient';
 
 export const metadata: Metadata = {
-  title: 'Settings | Flyx',
+  title: 'Settings | FoxStream',
   description: 'Manage your preferences, sync settings, and provider configuration',
 };
 

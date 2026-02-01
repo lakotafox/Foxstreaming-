@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   
   if (isNaN(malId) || malId <= 0) {
     return {
-      title: 'Invalid Anime | Flyx',
+      title: 'Invalid Anime | FoxStream',
       description: 'The requested anime ID is invalid.',
     };
   }
@@ -25,20 +25,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   
   if (!anime) {
     return {
-      title: 'Anime Not Found | Flyx',
+      title: 'Anime Not Found | FoxStream',
       description: 'The requested anime could not be found.',
     };
   }
 
   return {
-    title: `${anime.title} | Flyx Anime`,
-    description: anime.synopsis || `Watch ${anime.title} on Flyx`,
+    title: `${anime.title} | FoxStream Anime`,
+    description: anime.synopsis || `Watch ${anime.title} on FoxStream`,
     openGraph: {
       title: anime.title,
       description: anime.synopsis || undefined,
       images: anime.images?.jpg?.large_image_url ? [anime.images.jpg.large_image_url] : undefined,
       type: 'video.tv_show',
-      siteName: 'Flyx',
+      siteName: 'FoxStream',
     },
     twitter: {
       card: 'summary_large_image',

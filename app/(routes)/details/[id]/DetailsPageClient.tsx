@@ -161,7 +161,7 @@ function RelatedContentSection({
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                     </svg>
-                    {(item.vote_average || item.rating || 0).toFixed(1)}
+                    {(parseFloat(String(item.vote_average || item.rating || 0)) || 0).toFixed(1)}
                   </div>
                 </div>
 
@@ -690,7 +690,7 @@ export default function DetailsPageClient({
     return null;
   }
 
-  const formattedRating = (content.rating || content.vote_average || 0).toFixed(1);
+  const formattedRating = (parseFloat(String(content.rating || content.vote_average || 0)) || 0).toFixed(1);
   const releaseYear = content.releaseDate
     ? new Date(content.releaseDate).getFullYear()
     : 'N/A';
@@ -824,7 +824,7 @@ export default function DetailsPageClient({
                 {/* Show MAL rating for anime, TMDB rating otherwise */}
                 {isAnime && malData?.mainEntry?.score ? (
                   <span className={styles.rating} title="MyAnimeList Score">
-                    ⭐ {malData.mainEntry.score.toFixed(2)} <span className={styles.malBadgeSmall}>MAL</span>
+                    ⭐ {(parseFloat(String(malData.mainEntry.score)) || 0).toFixed(2)} <span className={styles.malBadgeSmall}>MAL</span>
                   </span>
                 ) : (
                   <span className={styles.rating}>⭐ {formattedRating}</span>

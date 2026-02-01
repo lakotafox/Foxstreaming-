@@ -31,18 +31,18 @@ export const viewport: Viewport = {
   maximumScale: 5,
   userScalable: true,
   viewportFit: 'cover',
-  themeColor: '#6366f1',
+  themeColor: '#f7931e',
   colorScheme: 'dark light',
 }
 
 export const metadata: Metadata = {
-  title: 'Flyx 2.0 - Stream Beyond',
-  description: 'Discover and stream your favorite movies and TV shows with Flyx 2.0. Your ultimate entertainment destination.',
-  metadataBase: new URL('https://tv.vynx.cc'),
-  keywords: ['movies', 'tv shows', 'streaming', 'entertainment', 'flyx'],
-  authors: [{ name: 'Flyx Team' }],
-  creator: 'Flyx Team',
-  publisher: 'Flyx',
+  title: 'FoxStream - Stream Beyond',
+  description: 'Discover and stream your favorite movies and TV shows with FoxStream. Your ultimate entertainment destination.',
+  metadataBase: new URL('http://localhost:3006'),
+  keywords: ['movies', 'tv shows', 'streaming', 'entertainment', 'foxstream'],
+  authors: [{ name: 'FoxStream' }],
+  creator: 'FoxStream',
+  publisher: 'FoxStream',
   formatDetection: {
     email: false,
     address: false,
@@ -50,16 +50,16 @@ export const metadata: Metadata = {
   },
   // Open Graph tags
   openGraph: {
-    title: 'Flyx 2.0 - Stream Beyond',
-    description: 'Discover and stream your favorite movies and TV shows with Flyx 2.0. Your ultimate entertainment destination.',
-    url: 'https://tv.vynx.cc',
-    siteName: 'Flyx 2.0',
+    title: 'FoxStream - Stream Beyond',
+    description: 'Discover and stream your favorite movies and TV shows with FoxStream. Your ultimate entertainment destination.',
+    url: 'http://localhost:3006',
+    siteName: 'FoxStream',
     images: [
       {
-        url: 'https://tv.vynx.cc/opengraph-image',
+        url: 'http://localhost:3006/opengraph-image',
         width: 1200,
         height: 630,
-        alt: 'Flyx 2.0 - Stream Beyond',
+        alt: 'FoxStream - Stream Beyond',
         type: 'image/png',
       },
     ],
@@ -69,10 +69,10 @@ export const metadata: Metadata = {
   // Twitter Card tags
   twitter: {
     card: 'summary_large_image',
-    title: 'Flyx 2.0 - Stream Beyond',
-    description: 'Discover and stream your favorite movies and TV shows with Flyx 2.0. Your ultimate entertainment destination.',
-    images: ['https://tv.vynx.cc/twitter-image'],
-    creator: '@flyx', // Update with your actual Twitter handle if you have one
+    title: 'FoxStream - Stream Beyond',
+    description: 'Discover and stream your favorite movies and TV shows with FoxStream. Your ultimate entertainment destination.',
+    images: ['http://localhost:3006/twitter-image'],
+    creator: '@foxstream',
   },
   // Apple Touch Icon
   icons: {

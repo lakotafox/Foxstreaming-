@@ -181,12 +181,12 @@ function ContentRow({ title, data, onItemClick, onSeeAll, accentColor = 'pink' }
                   </div>
                   
                   {/* Score badge */}
-                  {(item.score ?? 0) > 0 && (
+                  {(item.score ?? 0) > 0 && !isNaN(Number(item.score)) && (
                     <div className="absolute top-1.5 right-1.5 px-1.5 py-0.5 bg-black/70 backdrop-blur-sm rounded text-[10px] font-semibold text-yellow-400 flex items-center gap-0.5">
                       <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                       </svg>
-                      {item.score?.toFixed(1)}
+                      {(parseFloat(String(item.score)) || 0).toFixed(1)}
                     </div>
                   )}
                 </div>

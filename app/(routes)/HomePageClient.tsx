@@ -270,7 +270,7 @@ export default function HomePageClient({
                               <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                             </svg>
                             <span className="text-white text-xs sm:text-sm font-medium">
-                              {(currentHero.vote_average || currentHero.rating || 0).toFixed(1)}
+                              {(parseFloat(String(currentHero.vote_average || currentHero.rating || 0)) || 0).toFixed(1)}
                             </span>
                           </div>
                           <span className="px-2 py-0.5 bg-white/10 rounded text-[10px] sm:text-xs uppercase tracking-wide text-white/80">
@@ -880,7 +880,7 @@ function ContentSection({
                       <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" className="sm:w-3.5 sm:h-3.5">
                         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                       </svg>
-                      {(item.vote_average || item.rating || 0).toFixed(1)}
+                      {(parseFloat(String(item.vote_average || item.rating || 0)) || 0).toFixed(1)}
                     </div>
                   </div>
 
@@ -889,7 +889,11 @@ function ContentSection({
                       {item.title || item.name || 'Untitled'}
                     </h3>
                     <p className="text-gray-400 text-[10px] sm:text-sm">
-                      {new Date(item.release_date || item.first_air_date || item.releaseDate || '').getFullYear()}
+                      {(() => {
+                        const dateStr = item.release_date || item.first_air_date || item.releaseDate || '';
+                        const year = dateStr ? new Date(dateStr).getFullYear() : NaN;
+                        return isNaN(year) ? '' : year;
+                      })()}
                     </p>
                   </div>
                 </>

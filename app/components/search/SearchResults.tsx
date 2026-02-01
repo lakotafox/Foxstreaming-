@@ -158,7 +158,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
                             ? 'TV Show'
                             : 'Person'}
                       </span>
-                      {result.releaseDate && (
+                      {result.releaseDate && !isNaN(new Date(result.releaseDate).getTime()) && (
                         <>
                           <span className={styles.separator}>•</span>
                           <span className={styles.year}>
@@ -166,11 +166,11 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
                           </span>
                         </>
                       )}
-                      {(result.rating || 0) > 0 && (
+                      {(parseFloat(String(result.rating)) || 0) > 0 && (
                         <>
                           <span className={styles.separator}>•</span>
                           <span className={styles.rating}>
-                            ⭐ {(result.rating || 0).toFixed(1)}
+                            ⭐ {(parseFloat(String(result.rating)) || 0).toFixed(1)}
                           </span>
                         </>
                       )}

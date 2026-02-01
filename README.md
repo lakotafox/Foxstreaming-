@@ -1,411 +1,145 @@
-# Flyx
+# 🦊 FoxStream
 
-A modern streaming platform built with Next.js 16, featuring movies, TV shows, live TV, and cross-device sync. Deployed on Cloudflare's edge network for maximum performance.
+**Stream movies, TV shows, anime, and live sports — all in one app.**
 
-![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue?style=flat-square)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38bdf8?style=flat-square)
-![Cloudflare](https://img.shields.io/badge/Cloudflare-Pages-F38020?style=flat-square)
-![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
+A privacy-respecting streaming platform that runs entirely on your computer. No accounts, no tracking, no ads.
 
-## Features
+## ✨ Features
 
-- **Movies & TV Shows** - Browse trending content, search, and watch with multiple video providers
-- **Live TV** - IPTV support with DLHD integration
-- **Cross-Device Sync** - Sync watchlist, continue watching, and preferences across devices
-- **Continue Watching** - Resume playback from where you left off
-- **Admin Dashboard** - Real-time analytics, user metrics, and live activity monitoring
-- **Privacy-First** - Anonymous tracking, no PII collected, GDPR-compliant
+- 🎬 **Movies & TV Shows** — Browse and stream from multiple sources
+- 🎌 **Anime** — Dedicated anime section with MyAnimeList integration
+- 📺 **Live TV** — 850+ channels including sports, news, and entertainment
+- 🚫 **No Ads** — Clean, distraction-free viewing experience
+- 🔒 **No Tracking** — Your watch history stays on your device
+- 💬 **Subtitles** — 29 languages via OpenSubtitles
+- 📱 **Chromecast & AirPlay** — Cast to your TV
 
----
+## 🚀 Quick Start
 
-## Deployment
+### Option 1: Desktop App (Recommended)
 
-Flyx runs entirely on Cloudflare's edge network using:
-- **Cloudflare Pages** - Next.js app via `@opennextjs/cloudflare`
-- **Cloudflare Workers** - Analytics, sync, and stream proxy
-- **Cloudflare D1** - SQLite database at the edge
+Download the app for your platform:
 
-### Prerequisites
+| Platform | Download |
+|----------|----------|
+| Mac (M1/M2/M3) | [FoxStream-arm64.dmg](../../releases) |
+| Mac (Intel) | [FoxStream.dmg](../../releases) |
+| Windows | Coming soon |
 
-1. [Cloudflare account](https://dash.cloudflare.com/sign-up) (free tier works)
-2. [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/install-and-update/) installed
-3. [TMDB API key](https://www.themoviedb.org/settings/api)
+**Requirements:**
+- [Node.js](https://nodejs.org/) v18 or higher
+- First launch takes a few minutes to set up
 
-```bash
-# Install Wrangler globally
-npm install -g wrangler
-
-# Login to Cloudflare
-wrangler login
-```
-
----
-
-## Quick Start
-
-### 1. Clone and Install
+### Option 2: Run from Source
 
 ```bash
-git clone https://github.com/Vynx-Velvet/flyx-main.git
-cd flyx-main
+# Clone the repo
+git clone https://github.com/lakotafox/Foxstreaming-.git foxstream
+cd foxstream
+
+# Install dependencies
 npm install
+
+# Start all services
+npm run dev
 ```
 
-### 2. Configure Environment
+Then open [http://localhost:3006](http://localhost:3006)
+
+## 🏗️ How It Works
+
+FoxStream runs three local services:
+
+```
+┌─────────────────────────────────────────────────┐
+│  FoxStream                                       │
+│                                                  │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐      │
+│  │  Web UI  │  │  Proxy   │  │  Worker  │      │
+│  │  :3006   │  │  :3001   │  │  :8787   │      │
+│  └────┬─────┘  └────┬─────┘  └────┬─────┘      │
+│       └─────────────┴─────────────┘             │
+└─────────────────────│───────────────────────────┘
+                      ▼
+              Streaming Sources
+```
+
+| Service | Port | What it does |
+|---------|------|--------------|
+| Web UI | 3006 | The interface you see (Next.js) |
+| Proxy | 3001 | Routes streams through your home IP |
+| Worker | 8787 | Handles stream authentication |
+
+Everything runs locally — **your IP, your connection, your privacy**.
+
+## 📁 Project Structure
+
+```
+foxstream/
+├── app/                    # Next.js application
+│   ├── (routes)/          # Pages
+│   ├── api/               # API endpoints
+│   ├── components/        # UI components
+│   └── lib/               # Utilities
+├── cloudflare-proxy/      # Stream auth worker
+├── rpi-proxy/             # Local proxy server
+├── electron-app/          # Desktop app
+│   ├── main.js           # App entry point
+│   └── dist/             # Built apps
+└── public/               # Static files
+```
+
+## 🎬 Content Sources
+
+FoxStream aggregates from multiple providers:
+
+| Type | Sources |
+|------|---------|
+| Movies/TV | VidSrc, Videasy, + fallbacks |
+| Anime | AnimeKai + MAL metadata |
+| Live TV | DLHD, CDN Live, VIPRow |
+
+## 🛠️ Building the Desktop App
 
 ```bash
-cp .env.example .env.local
+cd electron-app
+npm install
+
+# Build for Mac
+npm run build:mac
+
+# Build for Windows
+npm run build:win
+
+# Build for Linux
+npm run build:linux
 ```
 
-Edit `.env.local` with your configuration:
+Output files appear in `electron-app/dist/`
+
+## ⚙️ Configuration
+
+Create `.env.local` in the root folder:
 
 ```env
-# Required - TMDB API
-TMDB_API_KEY=your_tmdb_bearer_token
-NEXT_PUBLIC_TMDB_API_KEY=your_tmdb_api_key
-
-# Cloudflare Worker URLs (update after deploying workers)
-NEXT_PUBLIC_CF_SYNC_URL=https://flyx-sync.YOUR-SUBDOMAIN.workers.dev
-NEXT_PUBLIC_CF_ANALYTICS_WORKER_URL=https://flyx-analytics.YOUR-SUBDOMAIN.workers.dev
-NEXT_PUBLIC_CF_PROXY_URL=https://media-proxy.YOUR-SUBDOMAIN.workers.dev
+NEXT_PUBLIC_TMDB_API_KEY=your_key_here
 ```
 
-### 3. Set Up D1 Databases
+Get a free API key at [themoviedb.org](https://www.themoviedb.org/settings/api)
 
-Create the required D1 databases:
+## ⚠️ Disclaimer
 
-```bash
-# Admin database (for main app)
-wrangler d1 create flyx-admin-db
+FoxStream is for **educational and personal use only**.
 
-# Analytics database (for analytics worker)
-cd cf-analytics-worker
-wrangler d1 create flyx-analytics-db
-cd ..
+- We don't host any content
+- We don't encourage piracy
+- Respect copyright laws in your country
+- Use responsibly
 
-# Sync database (for sync worker)
-cd cf-sync-worker
-wrangler d1 create flyx-sync-db
-cd ..
-```
+## 📄 License
 
-**Important:** Copy the `database_id` from each command output and update the respective `wrangler.toml` files.
-
-### 4. Initialize Database Schemas
-
-```bash
-# Initialize admin database schema
-npm run d1:init
-
-# Initialize analytics worker schema
-cd cf-analytics-worker
-wrangler d1 execute flyx-analytics-db --file=schema.sql
-cd ..
-
-# Initialize sync worker schema
-cd cf-sync-worker
-wrangler d1 execute flyx-sync-db --file=schema.sql
-cd ..
-```
-
-### 5. Configure Secrets
-
-```bash
-# Set secrets for main app
-wrangler secret put TMDB_API_KEY
-wrangler secret put JWT_SECRET
-
-# Set secrets for media proxy (if using RPI proxy)
-cd cloudflare-proxy
-wrangler secret put RPI_PROXY_URL
-wrangler secret put RPI_PROXY_KEY
-cd ..
-```
-
-### 6. Deploy Everything
-
-```bash
-# Deploy all workers and the main app
-npm run deploy:all
-```
-
-Or deploy individually:
-
-```bash
-# Deploy workers first
-npm run deploy:analytics-worker
-npm run deploy:sync-worker
-npm run deploy:media-proxy
-
-# Then deploy the main app
-npm run deploy:cloudflare
-```
+MIT License
 
 ---
 
-## Deployment Scripts
-
-| Script | Description |
-|--------|-------------|
-| `npm run build:cloudflare` | Build Next.js app for Cloudflare Pages |
-| `npm run deploy:cloudflare` | Build and deploy main app to Cloudflare Pages |
-| `npm run deploy:analytics-worker` | Deploy analytics worker |
-| `npm run deploy:sync-worker` | Deploy sync worker |
-| `npm run deploy:media-proxy` | Deploy media proxy worker |
-| `npm run deploy:workers` | Deploy all three workers |
-| `npm run deploy:all` | Deploy workers + main app (full deployment) |
-| `npm run preview:cloudflare` | Preview Cloudflare build locally |
-
----
-
-## D1 Database Setup
-
-### Database Structure
-
-Flyx uses three D1 databases:
-
-| Database | Purpose | Used By |
-|----------|---------|---------|
-| `flyx-admin-db` | Admin users, feedback, bot detection, daily metrics | Main App |
-| `flyx-analytics-db` | Page views, watch sessions, presence tracking | Analytics Worker |
-| `flyx-sync-db` | Watch progress, watchlist, user preferences | Sync Worker |
-
-### Updating wrangler.toml
-
-After creating databases, update the `database_id` in each `wrangler.toml`:
-
-**Root `wrangler.toml`:**
-```toml
-[[d1_databases]]
-binding = "DB"
-database_name = "flyx-admin-db"
-database_id = "YOUR-ADMIN-DB-ID"
-```
-
-**`cf-analytics-worker/wrangler.toml`:**
-```toml
-[[d1_databases]]
-binding = "DB"
-database_name = "flyx-analytics-db"
-database_id = "YOUR-ANALYTICS-DB-ID"
-```
-
-**`cf-sync-worker/wrangler.toml`:**
-```toml
-[[d1_databases]]
-binding = "DB"
-database_name = "flyx-sync-db"
-database_id = "YOUR-SYNC-DB-ID"
-```
-
-### Database Commands
-
-```bash
-# Initialize admin database
-npm run d1:init
-
-# Initialize locally (for development)
-npm run d1:init:local
-
-# Query database directly
-wrangler d1 execute flyx-admin-db --command="SELECT * FROM admin_users"
-```
-
----
-
-## Environment Variables
-
-### Required
-
-| Variable | Description |
-|----------|-------------|
-| `TMDB_API_KEY` | TMDB Bearer token (Read Access Token) |
-| `NEXT_PUBLIC_TMDB_API_KEY` | TMDB API key (v3 auth) |
-
-### Cloudflare Worker URLs
-
-| Variable | Description |
-|----------|-------------|
-| `NEXT_PUBLIC_CF_SYNC_URL` | Sync Worker URL for cross-device sync |
-| `NEXT_PUBLIC_CF_ANALYTICS_WORKER_URL` | Analytics Worker URL |
-| `NEXT_PUBLIC_CF_PROXY_URL` | Media proxy worker URL |
-
-### Optional
-
-| Variable | Description |
-|----------|-------------|
-| `JWT_SECRET` | Secret for admin JWT tokens |
-| `RPI_PROXY_URL` | RPI proxy URL for DLHD streams |
-| `RPI_PROXY_KEY` | RPI proxy authentication key |
-
----
-
-## Local Development
-
-```bash
-# Start Next.js dev server
-npm run dev
-
-# Preview Cloudflare build locally
-npm run preview:cloudflare
-
-# Run workers locally
-cd cf-analytics-worker && npm run dev
-cd cf-sync-worker && npm run dev
-cd cloudflare-proxy && npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000)
-
----
-
-## Admin Panel
-
-Access at `/admin` after deployment.
-
-**Default credentials:** `vynx` / `defaultPassword`
-
-⚠️ **Change password immediately after first login!**
-
-### Admin Commands
-
-```bash
-# Create new admin
-npm run admin:create <username> <password>
-
-# Reset password  
-npm run admin:reset-password <username> <new-password>
-
-# List all admins
-npm run admin:list
-
-# Delete admin
-npm run admin:delete <username>
-```
-
----
-
-## Architecture
-
-```
-┌──────────────────────────────────────────────────────────────┐
-│                    Cloudflare Edge Network                   │
-│  ┌────────────────────────────────────────────────────────┐ │
-│  │              Cloudflare Pages (Next.js)                │ │
-│  │              via @opennextjs/cloudflare                │ │
-│  │                        │                               │ │
-│  │                   D1: flyx-admin-db                    │ │
-│  └────────────────────────────────────────────────────────┘ │
-│                           │                                  │
-│  ┌─────────────┐  ┌──────────────┐  ┌───────────────────┐  │
-│  │ Sync Worker │  │  Analytics   │  │   Media Proxy     │  │
-│  │             │  │   Worker     │  │     Worker        │  │
-│  │ D1: sync-db │  │ D1: analytics│  │                   │  │
-│  └─────────────┘  └──────────────┘  └───────────────────┘  │
-└──────────────────────────────────────────────────────────────┘
-```
-
-### Why Cloudflare?
-
-- **Free tier**: 100k requests/day, 5GB D1 storage, unlimited Pages bandwidth
-- **Global edge**: <50ms latency worldwide with 300+ edge locations
-- **No cold starts**: Always warm, instant responses
-- **SQLite at edge**: D1 is SQLite, simple and fast
-- **Automatic SSL**: Free SSL certificates
-- **Preview deployments**: Automatic previews for PRs
-
----
-
-## Project Structure
-
-```
-flyx-main/
-├── app/                    # Next.js App Router
-│   ├── (routes)/          # Page routes
-│   ├── admin/             # Admin panel
-│   ├── api/               # API routes
-│   ├── components/        # React components
-│   ├── lib/               # Utilities & services
-│   │   ├── db/           # D1 database utilities
-│   │   ├── analytics/    # Analytics client
-│   │   └── sync/         # Sync client
-│   └── types/             # TypeScript types
-├── cf-analytics-worker/   # Analytics Worker + D1
-├── cf-sync-worker/        # Sync Worker + D1
-├── cloudflare-proxy/      # Stream proxy worker
-├── scripts/               # CLI scripts
-│   ├── init-d1-admin.sql # D1 schema initialization
-│   └── create-admin.js   # Admin user creation
-├── wrangler.toml          # Main app Cloudflare config
-└── open-next.config.ts    # OpenNext configuration
-```
-
----
-
-## Troubleshooting
-
-### Build Fails
-
-```bash
-# Clear build cache and rebuild
-rm -rf .open-next .next
-npm run build:cloudflare
-```
-
-### D1 Database Issues
-
-```bash
-# Check database exists
-wrangler d1 list
-
-# Check tables
-wrangler d1 execute flyx-admin-db --command="SELECT name FROM sqlite_master WHERE type='table'"
-
-# Re-initialize schema
-npm run d1:init
-```
-
-### Worker Deployment Issues
-
-```bash
-# Check worker status
-wrangler deployments list
-
-# View worker logs
-cd cf-analytics-worker && wrangler tail
-```
-
-### Environment Variables Not Working
-
-1. Verify secrets are set: `wrangler secret list`
-2. Check `wrangler.toml` has correct `[vars]` section
-3. Redeploy after adding secrets
-
----
-
-## Testing
-
-```bash
-# Run all tests
-npm test
-
-# Run specific test suites
-npm run test:livetv
-npm run test:livetv:api
-
-# Type checking
-npm run type-check
-```
-
----
-
-## Credits
-
-- **Movie & TV Data** - [TMDB](https://www.themoviedb.org/)
-- **IPTV Help** - [MoldyTaint/Cinephage](https://github.com/MoldyTaint/Cinephage)
-- **Cloudflare Adapter** - [@opennextjs/cloudflare](https://opennext.js.org/cloudflare)
-
-## License
-
-MIT License - see [LICENSE](LICENSE)
+**Made with 🦊 by the FoxStream team**

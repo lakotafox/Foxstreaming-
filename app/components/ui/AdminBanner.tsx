@@ -75,8 +75,21 @@ export default function AdminBanner() {
   const fetchBanner = async () => {
     try {
       const response = await fetch('/api/admin/banner');
-      const data = await response.json();
-      
+
+      // Check if response is ok and has content
+      if (!response.ok) {
+        setBanner(null);
+        return;
+      }
+
+      const text = await response.text();
+      if (!text || text.trim() === '') {
+        setBanner(null);
+        return;
+      }
+
+      const data = JSON.parse(text);
+
       if (data.success && data.data?.banner && data.data.banner.enabled) {
         // Check if banner has expired
         if (data.data.banner.expiresAt && new Date(data.data.banner.expiresAt) < new Date()) {
@@ -88,7 +101,7 @@ export default function AdminBanner() {
         setBanner(null);
       }
     } catch (error) {
-      console.error('Failed to fetch banner:', error);
+      // Silently fail - banner is not critical
       setBanner(null);
     } finally {
       setLoading(false);

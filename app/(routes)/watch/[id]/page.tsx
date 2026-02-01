@@ -1,7 +1,7 @@
 import WatchPageClient from './WatchPageClient';
 
 export const metadata = {
-  title: 'Watch - Flyx',
+  title: 'Watch - FoxStream',
   description: 'Stream your favorite movies and TV shows',
 };
 

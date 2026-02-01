@@ -568,7 +568,7 @@ export default function SearchPageClient({
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="text-yellow-500">
                                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                                 </svg>
-                                {item.vote_average?.toFixed(1)}
+                                {(parseFloat(String(item.vote_average || 0)) || 0).toFixed(1)}
                               </span>
                             </div>
                           </div>
