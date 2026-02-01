@@ -38,7 +38,16 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: 'FoxStream - Stream Beyond',
   description: 'Discover and stream your favorite movies and TV shows with FoxStream. Your ultimate entertainment destination.',
-  metadataBase: new URL('http://localhost:3006'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3006'),
+  // Block search engines from indexing
+  robots: {
+    index: false,
+    follow: false,
+    googleBot: {
+      index: false,
+      follow: false,
+    },
+  },
   keywords: ['movies', 'tv shows', 'streaming', 'entertainment', 'foxstream'],
   authors: [{ name: 'FoxStream' }],
   creator: 'FoxStream',
